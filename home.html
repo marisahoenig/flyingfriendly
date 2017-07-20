@@ -8,8 +8,10 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
   <title>Flying Friendly</title>
 </head>
+
 <body>
     <h1>Flying Friendly</h1>
+
   <div id="container"> <!--d3 chart gets inserted in this div-->
     <image id="plane" src="theplane.png" height="700" width="500">
   </div>
@@ -18,7 +20,9 @@
   // based on this tutorial: http://mbostock.github.com/d3/tutorial/bar-1.html
   // with adjustments and stuff
   // see it here: http://jsbin.com/avemek/2/ 
+
   d3.csv("flying-etiquette_v2.csv", function(error, data) {
+    if (error) throw error;
     var currentValue = 0;
     var length = data.length;
     data = data.map(function(d) {
@@ -31,6 +35,8 @@
         currentValue += 1;
       }
     }
+
+    //this sets the characteristics of the rectangles
     var currentValue = (currentValue / length) * 100;
     var newData = [100, currentValue]; // here are the data values; v1 = total, v2 = current value
     var width = 100;
@@ -56,7 +62,7 @@
   var y = d3.scaleLinear()
     .domain([0, 100])
     .rangeRound([0, height]);
-   svg.selectAll("rect") // this is what actually creates the bars
+  svg.selectAll("rect") // this is what actually creates the bars
     .data(newData)
     .enter().append("rect")
     .attr("width", width)
@@ -64,11 +70,6 @@
     .attr("rx", 5) // rounded corners
     .attr("ry", 5)
   });
-//   d3.csv("flying-etiquette.csv", function(error, data) {
-//   if (error) throw error;
-// recliningSeat
-
-//   }
   
   /*  
   svg.selectAll("text") // adding the text labels to the bar
