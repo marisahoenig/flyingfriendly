@@ -1,9 +1,5 @@
 /*Some code used from http://bl.ocks.org/nelliemckesson/5315143*/
 
-body {
-    background-color: #98AFC7;
-}
-
 .chart rect:first-of-type {
   color: #fff;
   stroke: #3994b6;
