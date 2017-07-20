@@ -71,44 +71,49 @@
       flag = true;
       switchState(data, 4);
     });
-  wait();
 
   function switchState(data, state) {
     currentValue = 0;
     numParticipants = 0;
     if (flag) {
-      for (var i = 0; i < length; i++) {
-        if (state == 1) {
+      if (state == 1) {
+        for (var i = 0; i < length; i++) {
           if (data[i].recliningSeat.indexOf("Yes,") == 0) {
             currentValue ++;
             numParticipants++;
           } else if (data[i].recliningSeat.indexOf("No,") == 0) {
             numParticipants++;
           }
-        } else if (state == 2) {
+        }
+      } else if (state == 2) {
+        for (var i = 0; i < length; i++) {
           if (data[i].switchFriends.indexOf("Yes,") == 0) {
             currentValue++;
             numParticipants++;
           } else if (data[i].switchFriends.indexOf("No,") == 0) {
             numParticipants++;
           }
-        } else if (state == 3) {
+        }
+      } else if (state == 3) {
+        for (var i = 0; i < length; i++) {
           if (data[i].switchFamily.indexOf("Yes,") == 0) {
             currentValue++;
             numParticipants++;
           } else if (data[i].switchFriends.indexOf("No,") == 0) {
             numParticipants++;
           }
-        } else if (state == 4) {
+        }
+      } else if (state == 4) {
+        for (var i = 0; i < length; i++) {
           if (data[i].windowShade.indexOf("The") == 0) {
             currentValue++;
             numParticipants++;
           } else if (data[i].windowShade.indexOf("Everyone") == 0) {
             numParticipants++;
           }
-        } else {
-          wait();
         }
+      } else {
+        wait();
       }
     initialize(currentValue, numParticipants);
     }
