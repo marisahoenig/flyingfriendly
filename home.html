@@ -22,22 +22,102 @@
   // see it here: http://jsbin.com/avemek/2/ 
 
   d3.csv("flying-etiquette_v2.csv", function(error, data) {
+    var state = 0; // default state for now
+    var flag = false;
     if (error) throw error;
     var currentValue = 0;
+    var numParticipants = 0;
     var length = data.length;
     data = data.map(function(d) {
       d.recliningSeat = d["recliningSeat"];
-      d.switch = d["switchFriends"];
+      d.switchFriends = d["switchFriends"];
+      d.switchFamily = d["switchFamily"];
+      d.windowShade = d["windowShade"];
       return d;
     });
-    for (var i = 0; i < length; i++) {
-      if (data[i].recliningSeat.indexOf("Yes,") == 0) {
-        currentValue += 1;
-      }
-    }
+  // Reclining seat button
+  d3.select("#container")
+    .append("p")
+    .append("button")
+    .text("Reclining Seat")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 1);
+    }); 
 
-    //this sets the characteristics of the rectangles
-    var currentValue = (currentValue / length) * 100;
+  // Switching seats with a friend button
+  d3.select("p")
+    .append("button")
+    .text("Switching Friend")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 2);
+    });
+
+  // Switching with a family member button
+  d3.select("p")
+    .append("button")
+    .text("Switching Family")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 3);
+    });
+
+  // Window shade control button
+  d3.select("p")
+    .append("button")
+    .text("Window Shade")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 4);
+    });
+  wait();
+
+  function switchState(data, state) {
+    currentValue = 0;
+    numParticipants = 0;
+    if (flag) {
+      for (var i = 0; i < length; i++) {
+        if (state == 1) {
+          if (data[i].recliningSeat.indexOf("Yes,") == 0) {
+            currentValue ++;
+            numParticipants++;
+          } else if (data[i].recliningSeat.indexOf("No,") == 0) {
+            numParticipants++;
+          }
+        } else if (state == 2) {
+          if (data[i].switchFriends.indexOf("Yes,") == 0) {
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].switchFriends.indexOf("No,") == 0) {
+            numParticipants++;
+          }
+        } else if (state == 3) {
+          if (data[i].switchFamily.indexOf("Yes,") == 0) {
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].switchFriends.indexOf("No,") == 0) {
+            numParticipants++;
+          }
+        } else if (state == 4) {
+          if (data[i].windowShade.indexOf("The") == 0) {
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].windowShade.indexOf("Everyone") == 0) {
+            numParticipants++;
+          }
+        } else {
+          wait();
+        }
+      }
+    initialize(currentValue, numParticipants);
+    }
+    
+  }
+  //this sets the characteristics of the rectangles
+  function initialize(currentValue, numParticipants) {
+    d3.select("svg").remove();
+    currentValue = (currentValue / numParticipants) * 100;
     var newData = [100, currentValue]; // here are the data values; v1 = total, v2 = current value
     var width = 100;
     var height = 500;
@@ -56,19 +136,24 @@
       //class to make it responsive
       .classed("svg-content-responsive", true); 
     */
-  var x = d3.scaleLinear()
-    .domain([0, 1])
-    .range([0, 100]);
-  var y = d3.scaleLinear()
-    .domain([0, 100])
-    .rangeRound([0, height]);
-  svg.selectAll("rect") // this is what actually creates the bars
-    .data(newData)
-    .enter().append("rect")
-    .attr("width", width)
-    .attr("height", function(d) { return y(d); })
-    .attr("rx", 5) // rounded corners
-    .attr("ry", 5)
+    var x = d3.scaleLinear()
+      .domain([0, 1])
+      .range([0, 100]);
+    var y = d3.scaleLinear()
+      .domain([0, 100])
+      .rangeRound([0, height]);
+    svg.selectAll("rect") // this is what actually creates the bars
+      .data(newData)
+      .enter().append("rect")
+      .attr("width", width)
+      .attr("height", function(d) { return y(d); })
+      .attr("rx", 5) // rounded corners
+      .attr("ry", 5);
+    wait();
+  }
+  function wait() {
+    flag = false;
+  }
   });
   
   /*  
