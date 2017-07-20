@@ -1,52 +1,74 @@
 <!DOCTYPE html>
 <!-- Some code used from http://bl.ocks.org/nelliemckesson/5315143 -->
-<html>
+<htm lang="en">
 <head>
   <meta charset=utf-8 />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script src="http://d3js.org/d3.v2.js"></script>
+  <script charset="utf-8" type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <title>Flying Friendly</title>
 </head>
 
 <body>
     <h1>Flying Friendly</h1>
-  <center><div id="container"></div> <!--d3 chart gets inserted in this div-->
-    <image id="plane" src="theplane.png" height="700" width="500">
-  </center>
+
+  <div id="container"> <!--d3 chart gets inserted in this div-->
+  </div>
+  <image id="plane" src="theplane.png" height="700" width="500">
   <script>
   // based on this tutorial: http://mbostock.github.com/d3/tutorial/bar-1.html
   // with adjustments and stuff
-  // see it here: http://jsbin.com/avemek/2/
-
-  var currentValue = 75; // this changes the fill in the bar
-  var data = [100, currentValue]; // here are the data values; v1 = total, v2 = current value
-  $("#plane").css({top: 70, left: 90, position: "absolute"}); // reposition image
-  var width = 40;
-  var height = 400;
-  var svg = d3.select("#container").append("svg") // creating the svg object inside the container div
-    .attr("class", "chart")
-    .attr("width", width) // bar has a fixed width
-    .attr("height", height); // bar has fixed height
-
-
-  var x = d3.scale.linear() // takes the fixed width and creates the percentage from the data values
-    .range([0, width])
-    .domain([0, 1]);
-  var y = d3.scale.linear() // same for height
-    .domain([0, 100])
+  // see it here: http://jsbin.com/avemek/2/ 
+  d3.csv("flying-etiquette_v2.csv", function(error, data) {
+    if (error) throw error;
+    var currentValue = 0;
+    data = data.map(function(d) {
+      d.recliningSeat = d["recliningSeat"];
+      d.switch = d["switchFriends"];
+      return d;
+    });
+    for (var i = 0; i < length; i++) {
+      if (data[i].recliningSeat.indexOf("Yes") == 0) {
+        currentValue += 1;
+      }
+    }
+    var currentValue = (currentValue / length) * 100;
+    var newData = [100, currentValue]; // here are the data values; v1 = total, v2 = current value
+    var width = 100;
+    var height = 500;
+    var svg = d3.select("#container").append("svg") // creating the svg object inside the container div
+      .attr("class", "chart")
+      .attr("width", width) // bar has a fixed width
+      .attr("height", height); // bar has fixed height
+    /*
+    var plane = d3.select("div#plane")
+      .append("div")
+      .classed("svg-container", true) //container class to make it responsive
+      .append("svg")
+      //responsive SVG needs these 2 attributes and no width and height attr
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", "0 0 600 400")
+      //class to make it responsive
+      .classed("svg-content-responsive", true); 
+    */
+  var x = d3.scaleLinear([0, 1])
+    .range([0, width]);
+  var y = d3.scaleLinear([0, 100])
     .rangeRound([0, height]);
-
-  svg.selectAll("rect") // this is what actually creates the bars
-    .data(data)
-  .enter().append("rect")
+  $("#plane").css({top: 70, left: 70, position: "absolute"}); // reposition image
+    svg.selectAll("rect") // this is what actually creates the bars
+    .data(newData)
+    .enter().append("rect")
     .attr("width", width)
     .attr("height", function(d) { return y(d); })
     .attr("rx", 5) // rounded corners
-    .attr("ry", 5);
+    .attr("ry", 5)
+    .attr("x", 262)
+    .attr("y", 15);
+  });
 
 //   d3.csv("flying-etiquette.csv", function(error, data) {
-//   if (error) throw error;
+//   
 // recliningSeat
 
 //   }
