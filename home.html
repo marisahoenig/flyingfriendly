@@ -21,7 +21,7 @@
   // with adjustments and stuff
   // see it here: http://jsbin.com/avemek/2/ 
 
-  d3.csv("flying-etiquette_v2.csv", function(error, data) {
+  d3.csv("flying-etiquette_v3.csv", function(error, data) {
     var state = 0; // default state for now
     var flag = false;
     if (error) throw error;
@@ -29,17 +29,22 @@
     var numParticipants = 0;
     var length = data.length;
     data = data.map(function(d) {
-      d.recliningSeat = d["recliningSeat"];
-      d.switchFriends = d["switchFriends"];
-      d.switchFamily = d["switchFamily"];
-      d.windowShade = d["windowShade"];
-      return d;
+      return {
+        middleArmrest: d.middleArmrest, // who gets the middle of the two arm rests?
+        windowShade:   d.windowShade, // who has control of the window shade
+        moveEmpty:     d.moveEmpty, // move to an empty seat
+        recliningSeat: d.recliningSeat, // reclining your chair
+        switchFriends: d.switchFriends, // switching with a friend
+        switchFamily:  d.switchFamily, // switching with a family member
+        wakeBathroom:  d.wakeBathroom, // wake someone to use the bathroom
+        badChildren:   d.badChildren // having unruly children
+      };
     });
   // Reclining seat button
   d3.select("#container")
     .append("p")
     .append("button")
-    .text("Reclining Seat")
+    .text("Reclining seat")
     .on("click", function() {
       flag = true;
       switchState(data, 1);
@@ -48,7 +53,7 @@
   // Switching seats with a friend button
   d3.select("p")
     .append("button")
-    .text("Switching Friend")
+    .text("Switching friend")
     .on("click", function() {
       flag = true;
       switchState(data, 2);
@@ -57,7 +62,7 @@
   // Switching with a family member button
   d3.select("p")
     .append("button")
-    .text("Switching Family")
+    .text("Switching family")
     .on("click", function() {
       flag = true;
       switchState(data, 3);
@@ -66,10 +71,46 @@
   // Window shade control button
   d3.select("p")
     .append("button")
-    .text("Window Shade")
+    .text("Window shade")
     .on("click", function() {
       flag = true;
       switchState(data, 4);
+    });
+
+  // Move to an empty seat button
+  d3.select("p")
+    .append("button")
+    .text("Empty seat")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 5);
+    });
+
+  // Having unruly children button
+  d3.select("p")
+    .append("button")
+    .text("Bad children")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 6);
+    });
+
+  // Wake someone to use the bathroom button
+  d3.select("p")
+    .append("button")
+    .text("Wake bathroom")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 7);
+    });
+
+  // Who gets the two arm rests?
+  d3.select("p")
+    .append("button")
+    .text("Arm rest")
+    .on("click", function() {
+      flag = true;
+      switchState(data, 8);
     });
 
   function switchState(data, state) {
@@ -109,6 +150,44 @@
             currentValue++;
             numParticipants++;
           } else if (data[i].windowShade.indexOf("Everyone") == 0) {
+            numParticipants++;
+          }
+        }
+      } else if (state == 5) {
+        for (var i = 0; i < length; i++) {
+          if (data[i].moveEmpty.indexOf("Yes,") == 0) {
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].moveEmpty.indexOf("No,") == 0) {
+            numParticipants++;
+          }
+        }
+      } else if (state == 6) {
+        for (var i = 0; i < length; i++) {
+          if (data[i].badChildren.indexOf("Yes,") == 0) {
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].badChildren.indexOf("No,") == 0) {
+            numParticipants++;
+          }
+        }
+      } else if (state == 7) {
+        for (var i = 0; i < length; i++) {
+          if (data[i].wakeBathroom.indexOf("Yes,") == 0) {
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].wakeBathroom.indexOf("No,") == 0) {
+            numParticipants++;
+          }
+        }
+      } else if (state == 8) {
+        for (var i = 0; i < length; i++) {
+          if (data[i].middleArmrest.indexOf("Whoever") == 0) { 
+            // whoever puts their arm on it first
+            currentValue++;
+            numParticipants++;
+          } else if (data[i].middleArmrest.indexOf("The") == 0) {
+            // the arm rests should be shared or the person in the isle
             numParticipants++;
           }
         }
