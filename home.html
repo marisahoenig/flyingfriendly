@@ -74,18 +74,19 @@
   // Reclining seat button
   $("#recliningSeat").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of <id="rude">people <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that reclining your chair <br>" 
-      + "during a flight is rude</id><br>"
-      + "versus <id="notrude">not rude.";
+      + "during a flight is rude</font><br>"
+      + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 1);
   });
   // Waking a passenger to walk around
   $("#wakePassenger").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that waking up a passenger to walk <br>"
-      + "around is rude.";
+      + "around is rude</font>."
+      + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 2);
   });
   // Switching with a family member button
