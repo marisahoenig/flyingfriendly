@@ -12,7 +12,7 @@
 <body>
     <h1><img src="logo.png" class="title"></h1>
 
-  <div id="airplane" class="svg-container"> <!--d3 chart gets inserted in this div-->
+  <div id="container" class="svg-container"> <!--d3 chart gets inserted in this div-->
     <image id="plane" src="theplane.png" class="plane">
   </div>
     <button type="button" id="switchSeats" class="button" style="left:50px;top:300px;">
@@ -49,6 +49,7 @@
   d3.csv("flying-etiquette_v4.csv", function(error, data) {
     var state = 0; // default state for now
     var flag = false;
+    var text = "Welcome to Flying Friendly! Press any button to continue."
     if (error) throw error;
     var currentValue = 0;
     var numParticipants = 0;
@@ -65,56 +66,47 @@
         badChildren:   d.badChildren // having unruly children
       };
     });
-
   
   // Reclining seat button
   $("#recliningSeat").bind("click", function() {
     flag = true;
     switchState(data, 1);
   });
-
   // Waking a passenger to walk around
   $("#wakePassenger").bind("click", function() {
     flag = true;
     switchState(data, 2);
   });
-
   // Switching with a family member button
   $("#switchSeats").bind("click", function() {
     flag = true;
     switchState(data, 3);
   });
-
   // Window shade control button
   $("#windowShade").bind("click", function() {
     flag = true;
     switchState(data, 4);
   });
-
   // Mooving to an empty seat button
   $("#emptySeat").bind("click", function() {
     flag = true;
     switchState(data, 5);
   });
-
   // Having nruly children button  
   $("#badChildren").bind("click", function() {
     flag = true;
     switchState(data, 6);
   });
-
   // Wake up to use bathroom button
   $("#wakeBathroom").bind("click", function() {
     flag = true;
     switchState(data, 7);
   });
-
   // Who gets the two arm rests?
   $("#middleArmrest").bind("click", function() {
     flag = true;
     switchState(data, 8);
   });
-
   function switchState(data, state) {
     currentValue = 0;
     numParticipants = 0;
@@ -208,19 +200,16 @@
     var width = 70;
     var height = 400;
     var svg = d3.select("#container").append("svg") // creating the svg object inside the container div
-      // .attr("id", "#bars")
       .attr("class", "chart")
       .attr("width", width) // bar has a fixed width
       .attr("height", height) // bar has fixed height
-      .attr("transform", "translate(" + 668 + "," + -475 + ")");
-
+      .attr("transform", "translate(" + 800 + "," + -475 + ")");
     var x = d3.scaleLinear()
       .domain([0, 1])
       .range([0, 100]);
     var y = d3.scaleLinear()
       .domain([0, 100])
       .rangeRound([0, height]);
-
     svg.selectAll("rect") // this is what actually creates the bars
       .data(newData)
       .enter().append("rect")
