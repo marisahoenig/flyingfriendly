@@ -10,27 +10,43 @@
 </head>
 
 <body>
-    <h1><img src="logo.png"></h1>
+    <h1><img src="logo.png" class="title"></h1>
 
-   <div id="airplane"> <!--d3 chart gets inserted in this div -->
-    <image id="plane" src="theplane.png" height="700" width="500">
-  </div> 
-  <p style="margin-top: 10px;
-        margin-bottom: 10px;
-        margin-left: 10px;
-        margin-right: 10px;">
-    <button type="button" id="switchSeats" class="button">
-      <img src="SwitchSeatsIconSmall.jpg" class="image"/>
+  <div id="airplane" class="svg-container"> <!--d3 chart gets inserted in this div-->
+    <image id="plane" src="theplane.png" class="plane">
+  </div>
+    <button type="button" id="switchSeats" class="button" style="left:50px;top:300px;">
+      <img src="SwitchSeatsIcon.jpg" class="btn_img"/>
     </button>
-  </p>
+    <button type="button" id="windowShade" class="button" style="left:140px;top:300px;">
+      <img src="WindowIcon.jpg" class="btn_img"/>
+    </button>
+    <button type="button" id="recliningSeat" class="button" style="left:230px;top:300px">
+      <img src="ReclineIcon.jpg" class="btn_img" />
+    </button>
+    <button type="button" id="wakePassenger" class="button" style="left:320px;top:300px">
+      <!-- Insert switching with a friend image here. Similar to previous -->
+      <img src="SleepingIcon.jpg" class="btn_img" />
+    </button>
+    <button type="button" id="emptySeat" class="button" style="left:50px;top:210px">
+      <!-- Insert moving to an empty seat image here. Similar to previous -->
+    </button>
+    <button type="button" id="badChildren" class="button" style="left:140px;top:210px">
+      <!-- Insert bad children image here. Similar to previous -->
+      <img src="ChildrenIcon.jpg" class="btn_img" />
+    </button>
+    <button type="button" id="wakeBathroom" class="button" style="left:230px;top:210px">
+    <!-- Insert waking someone up to go to bathroom image here. Similar to previous -->
+      <img src="BathroomIcon.jpg" class="btn_img" />
+    </button>
+    <button type="button" id="middleArmrest" class="button" style="left:320px;top:210px">
+      <!-- Insert sharing middle armrest image here. Similar to previous -->
+    </button>
   <script>
   // based on this tutorial: http://mbostock.github.com/d3/tutorial/bar-1.html
   // with adjustments and stuff
   // see it here: http://jsbin.com/avemek/2/ 
-
-  var buttons = document.getElementById("switchSeats");
-  // buttons.innerHTML = '<img src="SwitchSeatsIconSmall.jpg" id="SwitchSeatsIcon" style= height:25px; width:25px" />';
-  d3.csv("flying-etiquette_v3.csv", function(error, data) {
+  d3.csv("flying-etiquette_v4.csv", function(error, data) {
     var state = 0; // default state for now
     var flag = false;
     if (error) throw error;
@@ -43,82 +59,61 @@
         windowShade:   d.windowShade, // who has control of the window shade
         moveEmpty:     d.moveEmpty, // move to an empty seat
         recliningSeat: d.recliningSeat, // reclining your chair
-        switchFriends: d.switchFriends, // switching with a friend
+        wakePassenger: d.wakePassenger, // waking a passenger to walk around
         switchFamily:  d.switchFamily, // switching with a family member
         wakeBathroom:  d.wakeBathroom, // wake someone to use the bathroom
         badChildren:   d.badChildren // having unruly children
       };
     });
+
+  
+  // Reclining seat button
+  $("#recliningSeat").bind("click", function() {
+    flag = true;
+    switchState(data, 1);
+  });
+
+  // Waking a passenger to walk around
+  $("#wakePassenger").bind("click", function() {
+    flag = true;
+    switchState(data, 2);
+  });
+
   // Switching with a family member button
   $("#switchSeats").bind("click", function() {
     flag = true;
     switchState(data, 3);
   });
 
-  // Reclining seat button
-  d3.select("#container")
-    .append("p")
-    .append("button")
-    .text("Reclining seat")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 1);
-    }); 
-
-  // Switching seats with a friend button
-  d3.select("p")
-    .append("button")
-    .text("Switching friend")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 2);
-    });
-
-
   // Window shade control button
-  d3.select("p")
-    .append("button")
-    .text("Window shade")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 4);
-    });
+  $("#windowShade").bind("click", function() {
+    flag = true;
+    switchState(data, 4);
+  });
 
-  // Move to an empty seat button
-  d3.select("p")
-    .append("button")
-    .text("Empty seat")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 5);
-    });
+  // Mooving to an empty seat button
+  $("#emptySeat").bind("click", function() {
+    flag = true;
+    switchState(data, 5);
+  });
 
-  // Having unruly children button
-  d3.select("p")
-    .append("button")
-    .text("Bad children")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 6);
-    });
+  // Having nruly children button  
+  $("#badChildren").bind("click", function() {
+    flag = true;
+    switchState(data, 6);
+  });
 
-  // Wake someone to use the bathroom button
-  d3.select("p")
-    .append("button")
-    .text("Wake bathroom")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 7);
-    });
+  // Wake up to use bathroom button
+  $("#wakeBathroom").bind("click", function() {
+    flag = true;
+    switchState(data, 7);
+  });
 
   // Who gets the two arm rests?
-  d3.select("p")
-    .append("button")
-    .text("Arm rest")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 8);
-    });
+  $("#middleArmrest").bind("click", function() {
+    flag = true;
+    switchState(data, 8);
+  });
 
   function switchState(data, state) {
     currentValue = 0;
@@ -135,10 +130,10 @@
         }
       } else if (state == 2) {
         for (var i = 0; i < length; i++) {
-          if (data[i].switchFriends.indexOf("Yes,") == 0) {
+          if (data[i].wakePassenger.indexOf("Yes,") == 0) {
             currentValue++;
             numParticipants++;
-          } else if (data[i].switchFriends.indexOf("No,") == 0) {
+          } else if (data[i].wakePassenger.indexOf("No,") == 0) {
             numParticipants++;
           }
         }
@@ -147,7 +142,7 @@
           if (data[i].switchFamily.indexOf("Yes,") == 0) {
             currentValue++;
             numParticipants++;
-          } else if (data[i].switchFriends.indexOf("No,") == 0) {
+          } else if (data[i].switchFamily.indexOf("No,") == 0) {
             numParticipants++;
           }
         }
@@ -210,30 +205,22 @@
     d3.select("svg").remove();
     currentValue = (currentValue / numParticipants) * 100;
     var newData = [100, currentValue]; // here are the data values; v1 = total, v2 = current value
-    var width = 100;
-    var height = 500;
+    var width = 70;
+    var height = 400;
     var svg = d3.select("#container").append("svg") // creating the svg object inside the container div
       // .attr("id", "#bars")
       .attr("class", "chart")
       .attr("width", width) // bar has a fixed width
-      .attr("height", height); // bar has fixed height
-    /*
-    var plane = d3.select("div#plane")
-      .append("div")
-      .classed("svg-container", true) //container class to make it responsive
-      .append("svg")
-      //responsive SVG needs these 2 attributes and no width and height attr
-      .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 600 400")
-      //class to make it responsive
-      .classed("svg-content-responsive", true); 
-    */
+      .attr("height", height) // bar has fixed height
+      .attr("transform", "translate(" + 668 + "," + -475 + ")");
+
     var x = d3.scaleLinear()
       .domain([0, 1])
       .range([0, 100]);
     var y = d3.scaleLinear()
       .domain([0, 100])
       .rangeRound([0, height]);
+
     svg.selectAll("rect") // this is what actually creates the bars
       .data(newData)
       .enter().append("rect")
@@ -241,7 +228,7 @@
       .attr("height", function(d) { return y(d); })
       .attr("rx", 5) // rounded corners
       .attr("ry", 5);
-    wait();
+      wait();
   }
   function wait() {
     flag = false;
