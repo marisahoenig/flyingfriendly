@@ -11,8 +11,10 @@
 
 <body>
     <h1><img src="logo.png" class="title"></h1>
-
   <div id="container" class="svg-container"> <!--d3 chart gets inserted in this div-->
+    <text id="screenText">Welcome to Flying Friendly!<br> 
+    Learn more about flight etiquette <br>
+    by pressing any button.</text>
     <image id="plane" src="theplane.png" class="plane">
   </div>
     <button type="button" id="switchSeats" class="button" style="left:50px;top:300px;">
@@ -30,6 +32,7 @@
     </button>
     <button type="button" id="emptySeat" class="button" style="left:50px;top:210px">
       <!-- Insert moving to an empty seat image here. Similar to previous -->
+      <img src="MoveToEmptyIcon.jpg" class="btn_img" />
     </button>
     <button type="button" id="badChildren" class="button" style="left:140px;top:210px">
       <!-- Insert bad children image here. Similar to previous -->
@@ -41,6 +44,7 @@
     </button>
     <button type="button" id="middleArmrest" class="button" style="left:320px;top:210px">
       <!-- Insert sharing middle armrest image here. Similar to previous -->
+      <img src="ArmRestIcon.jpg" class="btn_img" />
     </button>
   <script>
   // based on this tutorial: http://mbostock.github.com/d3/tutorial/bar-1.html
@@ -49,7 +53,7 @@
   d3.csv("flying-etiquette_v4.csv", function(error, data) {
     var state = 0; // default state for now
     var flag = false;
-    var text = "Welcome to Flying Friendly! Press any button to continue."
+    var newText = "";
     if (error) throw error;
     var currentValue = 0;
     var numParticipants = 0;
@@ -71,48 +75,74 @@
   // Reclining seat button
   $("#recliningSeat").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people <br>"
+      + "who think that reclining your chair <br>" 
+      + "during a flight is rude.";
     switchState(data, 1);
   });
 
   // Waking a passenger to walk around
   $("#wakePassenger").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people <br>"
+      + "who think that waking up a passenger to walk <br>"
+      + "around is rude.";
     switchState(data, 2);
   });
 
   // Switching with a family member button
   $("#switchSeats").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people <br>"
+      + "who think that switching seats with a family <br>" 
+      + "member is rude.";
     switchState(data, 3);
   });
 
   // Window shade control button
   $("#windowShade").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people who think <br>"
+      + "that the window shade belongs to the person in the <br>"
+      + "window seat versus everyone in the row.";
     switchState(data, 4);
   });
 
   // Mooving to an empty seat button
   $("#emptySeat").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people who think <br>"
+      + "that moving to an empty seat during <br>"
+      + "the flight is rude.";
     switchState(data, 5);
   });
 
   // Having nruly children button  
   $("#badChildren").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people who think <br>"
+      + "that bringing unruly children on a plane <br>"
+      + "is rude.";
     switchState(data, 6);
   });
 
   // Wake up to use bathroom button
   $("#wakeBathroom").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people who think <br>"
+      + "that waking up a passenger to use the bathroom <br>"
+      + "is rude.";
     switchState(data, 7);
   });
 
   // Who gets the two arm rests?
   $("#middleArmrest").bind("click", function() {
     flag = true;
+    newText = "This shows the percentage of people <br>"
+      + "who think that the middle arm rest belongs <br>" 
+      + "to the person who put their arm on the arm <br>"
+      + "rest first versus the number of people who <br>"
+      + "think that the arm rest should be shared.";
     switchState(data, 8);
   });
 
@@ -125,6 +155,7 @@
           if (data[i].recliningSeat.indexOf("Yes,") == 0) {
             currentValue ++;
             numParticipants++;
+
           } else if (data[i].recliningSeat.indexOf("No,") == 0) {
             numParticipants++;
           }
@@ -205,6 +236,7 @@
   function initialize(currentValue, numParticipants) {
     d3.select("svg").remove();
     currentValue = (currentValue / numParticipants) * 100;
+    document.getElementById("screenText").innerHTML = newText;
     var newData = [100, currentValue]; // here are the data values; v1 = total, v2 = current value
     var width = 70;
     var height = 400;
@@ -229,7 +261,7 @@
       .attr("rx", 5) // rounded corners
       .attr("ry", 5);
       wait();
-  }
+    }
   function wait() {
     flag = false;
   }
