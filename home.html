@@ -76,7 +76,7 @@
     flag = true;
     newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that reclining your chair <br>" 
-      + "during a flight is rude</font><br>"
+      + "during a flight is rude </font>"
       + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 1);
   });
@@ -85,7 +85,7 @@
     flag = true;
     newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that waking up a passenger to walk <br>"
-      + "around is rude</font>."
+      + "around is rude </font>"
       + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 2);
   });
@@ -237,7 +237,16 @@
       .attr("class", "chart")
       .attr("width", width) // bar has a fixed width
       .attr("height", height) // bar has fixed height
-      .attr("transform", "translate(" + 800 + "," + -475 + ")");
+      .attr("transform", "translate(" + 800 + "," + -475 + ")")
+      .on("mouseover", function() {
+            d3.select(this)
+              .attr("fill", "red");
+        })
+        .on("mouseout", function(d, i) {
+            d3.select(this).attr("fill", function() {
+                return "" + color(this.id) + "";
+            });
+        });
     var x = d3.scaleLinear()
       .domain([0, 1])
       .range([0, 100]);
@@ -250,24 +259,9 @@
       .attr("width", width)
       .attr("height", function(d) { return y(d); })
       .attr("rx", 5) // rounded corners
-      .attr("ry", 5)
-      .on("mouseover", handleMouseOver)
-      .on("mouseout", handleMouseOut);
+      .attr("ry", 5);
       wait();
     }
-
-  function handleMouseOver(d, i) {
-    svg.selectAll("rect").append("text").attr({
-      id: tempText
-    })
-    .text(function() {
-      return currentValue;
-    });
-  }
-
-  function handleMouseOut(d, i) {
-    d3.select("#tempText").remove();
-  }
 
   function wait() {
     flag = false;
