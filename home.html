@@ -94,7 +94,7 @@
     flag = true;
     newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that switching seats with a family <br>" 
-      + "member is rude</font>"
+      + "member is rude </font>"
       + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 3);
   });
@@ -111,7 +111,7 @@
     flag = true;
     newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that moving to an empty seat during <br>"
-      + "the flight is rude</font>"
+      + "the flight is rude </font>"
       + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 5);
   });
@@ -120,7 +120,7 @@
     flag = true;
     newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that bringing unruly children on a plane <br>"
-      + "is rude</font>"
+      + "is rude </font>"
       + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 6);
   });
@@ -129,7 +129,7 @@
     flag = true;
     newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that waking up a passenger to use the bathroom <br>"
-      + "is rude</font>"
+      + "is rude </font>"
       + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 7);
   });
@@ -242,15 +242,7 @@
       .attr("width", width) // bar has a fixed width
       .attr("height", height) // bar has fixed height
       .attr("transform", "translate(" + 800 + "," + -475 + ")")
-      .on("mouseover", function() {
-            d3.select(this)
-              .attr("fill", "red");
-        })
-        .on("mouseout", function(d, i) {
-            d3.select(this).attr("fill", function() {
-                return "" + color(this.id) + "";
-            });
-        });
+      
     var x = d3.scaleLinear()
       .domain([0, 1])
       .range([0, 100]);
@@ -265,8 +257,10 @@
       .attr("rx", 5) // rounded corners
       .attr("ry", 5);
       wait();
+    $("#plane").on("mouseover", function() {
+      
+     });
     }
-
   function wait() {
     flag = false;
   }
