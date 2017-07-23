@@ -92,51 +92,55 @@
   // Switching with a family member button
   $("#switchSeats").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that switching seats with a family <br>" 
-      + "member is rude.";
+      + "member is rude</font>"
+      + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 3);
   });
   // Window shade control button
   $("#windowShade").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people who think <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that the window shade belongs to the person in the <br>"
-      + "window seat versus everyone in the row.";
+      + "window seat</font> versus <font color='#7fbf7b'>everyone in the row.</font>";
     switchState(data, 4);
   });
   // Mooving to an empty seat button
   $("#emptySeat").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people who think <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that moving to an empty seat during <br>"
-      + "the flight is rude.";
+      + "the flight is rude</font>"
+      + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 5);
   });
   // Having nruly children button  
   $("#badChildren").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people who think <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that bringing unruly children on a plane <br>"
-      + "is rude.";
+      + "is rude</font>"
+      + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 6);
   });
   // Wake up to use bathroom button
   $("#wakeBathroom").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people who think <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people who think <br>"
       + "that waking up a passenger to use the bathroom <br>"
-      + "is rude.";
+      + "is rude</font>"
+      + "versus <font color='#7fbf7b'>not rude.</font>";
     switchState(data, 7);
   });
   // Who gets the two arm rests?
   $("#middleArmrest").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people <br>"
+    newText = "This shows the percentage of <font color='#af8dc3'>people <br>"
       + "who think that the middle arm rest belongs <br>" 
       + "to the person who put their arm on the arm <br>"
-      + "rest first versus the number of people who <br>"
-      + "think that the arm rest should be shared.";
+      + "rest first</font> versus <font color='#7fbf7b'>the number of people who <br>"
+      + "think that the arm rest should be shared.</font>";
     switchState(data, 8);
   });
   function switchState(data, state) {
