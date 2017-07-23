@@ -19,17 +19,35 @@
         margin-bottom: 10px;
         margin-left: 10px;
         margin-right: 10px;">
-    <button type="button" id="switchSeats" class="button">
+    <button type="button" id="switchSeats" class="button" style="left:380px;top:300px;">
       <img src="SwitchSeatsIconSmall.jpg" class="image"/>
+    </button>
+    <button type="button" id="windowShade" class="button" style="left:480px;top:300px;">
+      <img src="WindowIconSmall.jpg" class="image"/>
+    </button>
+    <button type="button" id="recliningSeat" class="button" style="left:580px;top:300px">
+      <img src="ReclineIconSmall.jpg" class="image" />
+    </button>
+    <button type="button" id="switchFriends" class="button" style="left:680px;top:300px">
+      <!-- Insert switching with a friend image here. Similar to previous -->
+    </button>
+    <button type="button" id="emptySeat" class="button" style="left:380px;top:200px">
+      <!-- Insert moving to an empty seat image here. Similar to previous -->
+    </button>
+    <button type="button" id="badChildren" class="button" style="left:480px;top:200px">
+      <!-- Insert bad children image here. Similar to previous -->
+    </button>
+    <button type="button" id="wakeBathroom" class="button" style="left:580px;top:200px">
+    <!-- Insert waking someone up to go to bathroom image here. Similar to previous -->
+    </button>
+    <button type="button" id="middleArmrest" class="button" style="left:680px;top:200px">
+      <!-- Insert sharing middle armrest image here. Similar to previous -->
     </button>
   </p>
   <script>
   // based on this tutorial: http://mbostock.github.com/d3/tutorial/bar-1.html
   // with adjustments and stuff
   // see it here: http://jsbin.com/avemek/2/ 
-
-  var buttons = document.getElementById("switchSeats");
-  // buttons.innerHTML = '<img src="SwitchSeatsIconSmall.jpg" id="SwitchSeatsIcon" style= height:25px; width:25px" />';
   d3.csv("flying-etiquette_v3.csv", function(error, data) {
     var state = 0; // default state for now
     var flag = false;
@@ -49,76 +67,55 @@
         badChildren:   d.badChildren // having unruly children
       };
     });
+
+  
+  // Reclining seat button
+  $("#recliningSeat").bind("click", function() {
+    flag = true;
+    switchState(data, 1);
+  });
+
+  // Switching with a friend button  
+  $("#switchFriends").bind("click", function() {
+    flag = true;
+    switchState(data, 2);
+  });
+
   // Switching with a family member button
   $("#switchSeats").bind("click", function() {
     flag = true;
     switchState(data, 3);
   });
 
-  // Reclining seat button
-  d3.select("#container")
-    .append("p")
-    .append("button")
-    .text("Reclining seat")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 1);
-    }); 
-
-  // Switching seats with a friend button
-  d3.select("p")
-    .append("button")
-    .text("Switching friend")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 2);
-    });
-
-
   // Window shade control button
-  d3.select("p")
-    .append("button")
-    .text("Window shade")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 4);
-    });
+  $("#windowShade").bind("click", function() {
+    flag = true;
+    switchState(data, 4);
+  });
 
-  // Move to an empty seat button
-  d3.select("p")
-    .append("button")
-    .text("Empty seat")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 5);
-    });
+  // Mooving to an empty seat button
+  $("#emptySeat").bind("click", function() {
+    flag = true;
+    switchState(data, 5);
+  });
 
-  // Having unruly children button
-  d3.select("p")
-    .append("button")
-    .text("Bad children")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 6);
-    });
+  // Having nruly children button  
+  $("#badChildren").bind("click", function() {
+    flag = true;
+    switchState(data, 6);
+  });
 
-  // Wake someone to use the bathroom button
-  d3.select("p")
-    .append("button")
-    .text("Wake bathroom")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 7);
-    });
+  // Wake up to use bathroom button
+  $("#wakeBathroom").bind("click", function() {
+    flag = true;
+    switchState(data, 7);
+  });
 
   // Who gets the two arm rests?
-  d3.select("p")
-    .append("button")
-    .text("Arm rest")
-    .on("click", function() {
-      flag = true;
-      switchState(data, 8);
-    });
+  $("#middleArmrest").bind("click", function() {
+    flag = true;
+    switchState(data, 8);
+  });
 
   function switchState(data, state) {
     currentValue = 0;
@@ -216,17 +213,6 @@
       .attr("class", "chart")
       .attr("width", width) // bar has a fixed width
       .attr("height", height); // bar has fixed height
-    /*
-    var plane = d3.select("div#plane")
-      .append("div")
-      .classed("svg-container", true) //container class to make it responsive
-      .append("svg")
-      //responsive SVG needs these 2 attributes and no width and height attr
-      .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 600 400")
-      //class to make it responsive
-      .classed("svg-content-responsive", true); 
-    */
     var x = d3.scaleLinear()
       .domain([0, 1])
       .range([0, 100]);
