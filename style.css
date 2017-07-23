@@ -66,3 +66,15 @@ h1 {
     text-align: center;
     color: #5257b8;
 }
+
+#airplane {
+  display: block;
+  margin: auto;
+  width: 40%;
+}
+
+/*#bars {
+  display: ;
+  margin: auto;
+  width: 40%;
+}*/

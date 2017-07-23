@@ -12,9 +12,9 @@
 <body>
     <h1><img src="logo.png"></h1>
 
-  <div id="container"> <!--d3 chart gets inserted in this div-->
+   <div id="airplane"> <!--d3 chart gets inserted in this div -->
     <image id="plane" src="theplane.png" height="700" width="500">
-  </div>
+  </div> 
   <p style="margin-top: 10px;
         margin-bottom: 10px;
         margin-left: 10px;
@@ -213,6 +213,7 @@
     var width = 100;
     var height = 500;
     var svg = d3.select("#container").append("svg") // creating the svg object inside the container div
+      // .attr("id", "#bars")
       .attr("class", "chart")
       .attr("width", width) // bar has a fixed width
       .attr("height", height); // bar has fixed height
