@@ -74,10 +74,10 @@
   // Reclining seat button
   $("#recliningSeat").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of <id="rude">people <br>"
+    newText = "This shows the percentage of people <br>"
       + "who think that reclining your chair <br>" 
-      + "during a flight is rude</id><br>"
-      + "versus <id="notrude">not rude.";
+      + "during a flight is rude<br>"
+      + "versus not rude.";
     switchState(data, 1);
   });
   // Waking a passenger to walk around
@@ -249,9 +249,25 @@
       .attr("width", width)
       .attr("height", function(d) { return y(d); })
       .attr("rx", 5) // rounded corners
-      .attr("ry", 5);
+      .attr("ry", 5)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
       wait();
     }
+
+  function handleMouseOver(d, i) {
+    svg.selectAll("rect").append("text").attr({
+      id: tempText
+    })
+    .text(function() {
+      return currentValue;
+    });
+  }
+
+  function handleMouseOut(d, i) {
+    d3.select("#tempText").remove();
+  }
+
   function wait() {
     flag = false;
   }
