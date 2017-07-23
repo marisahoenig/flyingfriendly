@@ -49,6 +49,7 @@
   d3.csv("flying-etiquette_v4.csv", function(error, data) {
     var state = 0; // default state for now
     var flag = false;
+    var text = "Welcome to Flying Friendly! Press any button to continue."
     if (error) throw error;
     var currentValue = 0;
     var numParticipants = 0;
@@ -211,7 +212,7 @@
       .attr("class", "chart")
       .attr("width", width) // bar has a fixed width
       .attr("height", height) // bar has fixed height
-      .attr("transform", "translate(" + 668 + "," + -475 + ")");
+      .attr("transform", "translate(" + 800 + "," + -475 + ")");
 
     var x = d3.scaleLinear()
       .domain([0, 1])
