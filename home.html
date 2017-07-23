@@ -70,7 +70,6 @@
         badChildren:   d.badChildren // having unruly children
       };
     });
-
   
   // Reclining seat button
   $("#recliningSeat").bind("click", function() {
@@ -80,7 +79,6 @@
       + "during a flight is rude.";
     switchState(data, 1);
   });
-
   // Waking a passenger to walk around
   $("#wakePassenger").bind("click", function() {
     flag = true;
@@ -89,7 +87,6 @@
       + "around is rude.";
     switchState(data, 2);
   });
-
   // Switching with a family member button
   $("#switchSeats").bind("click", function() {
     flag = true;
@@ -98,7 +95,6 @@
       + "member is rude.";
     switchState(data, 3);
   });
-
   // Window shade control button
   $("#windowShade").bind("click", function() {
     flag = true;
@@ -107,7 +103,6 @@
       + "window seat versus everyone in the row.";
     switchState(data, 4);
   });
-
   // Mooving to an empty seat button
   $("#emptySeat").bind("click", function() {
     flag = true;
@@ -116,7 +111,6 @@
       + "the flight is rude.";
     switchState(data, 5);
   });
-
   // Having nruly children button  
   $("#badChildren").bind("click", function() {
     flag = true;
@@ -125,7 +119,6 @@
       + "is rude.";
     switchState(data, 6);
   });
-
   // Wake up to use bathroom button
   $("#wakeBathroom").bind("click", function() {
     flag = true;
@@ -134,7 +127,6 @@
       + "is rude.";
     switchState(data, 7);
   });
-
   // Who gets the two arm rests?
   $("#middleArmrest").bind("click", function() {
     flag = true;
@@ -145,7 +137,6 @@
       + "think that the arm rest should be shared.";
     switchState(data, 8);
   });
-
   function switchState(data, state) {
     currentValue = 0;
     numParticipants = 0;
@@ -245,14 +236,12 @@
       .attr("width", width) // bar has a fixed width
       .attr("height", height) // bar has fixed height
       .attr("transform", "translate(" + 800 + "," + -475 + ")");
-
     var x = d3.scaleLinear()
       .domain([0, 1])
       .range([0, 100]);
     var y = d3.scaleLinear()
       .domain([0, 100])
       .rangeRound([0, height]);
-
     svg.selectAll("rect") // this is what actually creates the bars
       .data(newData)
       .enter().append("rect")
