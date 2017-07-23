@@ -74,9 +74,10 @@
   // Reclining seat button
   $("#recliningSeat").bind("click", function() {
     flag = true;
-    newText = "This shows the percentage of people <br>"
+    newText = "This shows the percentage of <id="rude">people <br>"
       + "who think that reclining your chair <br>" 
-      + "during a flight is rude.";
+      + "during a flight is rude</id><br>"
+      + "versus <id="notrude">not rude.";
     switchState(data, 1);
   });
   // Waking a passenger to walk around
